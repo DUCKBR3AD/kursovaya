@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор стоимости мебели для хранения</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: grid;
+            gap: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, input, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Калькулятор стоимости мебели для хранения</h1>
+    
+    <form method="POST">
+        <label for="material">Выберите материал</label>
+        <select id="material" name="material" required>
+            <option value="wood" {% if material == 'wood' %}selected{% endif %}>Дерево</option>
+            <option value="metal" {% if material == 'metal' %}selected{% endif %}>Металл</option>
+            <option value="plastic" {% if material == 'plastic' %}selected{% endif %}>Пластик</option>
+        </select>
+
+        <label for="type_of_furniture">Выберите тип мебели</label>
+        <select id="type_of_furniture" name="type_of_furniture" required>
+            <option value="cabinet" {% if type_of_furniture == 'cabinet' %}selected{% endif %}>Шкаф</option>
+            <option value="shelf" {% if type_of_furniture == 'shelf' %}selected{% endif %}>Полка</option>
+            <option value="drawer" {% if type_of_furniture == 'drawer' %}selected{% endif %}>Ящик</option>
+        </select>
+
+        <label for="size">Размер (в см)</label>
+        <input type="number" id="size" name="size" value="{{ size }}" required>
+
+        <label for="features">Дополнительные особенности</label>
+        <div>
+            <label><input type="checkbox" name="features" value="doors" {% if 'doors' in features %}checked{% endif %}> Двери</label><br>
+            <label><input type="checkbox" name="features" value="drawers" {% if 'drawers' in features %}checked{% endif %}> Ящики</label><br>
+            <label><input type="checkbox" name="features" value="shelves" {% if 'shelves' in features %}checked{% endif %}> Полки</label><br>
+        </div>
+
+        <button type="submit">Рассчитать стоимость</button>
+    </form>
+
+    {% if total_cost is not none %}
+        <div class="result">
+            <p>Стоимость: {{ total_cost }} руб.</p>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
